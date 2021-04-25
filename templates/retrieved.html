@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+
+        <meta charset="UTF-8">
+        <title>bennyboy blog - search</title>
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="bennyboy's blog">
+        <meta name="keywords" content="bennyboy, blog, cs50">
+        <meta name="author" content="bennyboy">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    </head>
+    <body>
+        <header>
+<!--            <div class="title"><img class="logo" src="/static/assets/benny-profile.svg" />BennyBoy</div>-->
+            <div class="title">{{ phrase }}</div>
+            <div class="menu">
+                <div><a class="menu-item-highlighted" href="/"> blog </a></div>
+                <div><a class="menu-item" href="/archives"> archives </a></div>
+                <div><a class="menu-item" href="/about"> about </a></div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="entries">
+                {% for entry in retrieved_entries %}
+                <div class="entry">
+                    <div class="date">{{ entry[2] }}</div>
+                    <div class="entry-title">{{ entry[0] | truncate(50, true) }}</div>
+                    <div class="entry-content">{{ entry[1] }}</div>
+                    {% if entry[3] != None %}
+                        <div class="link-content" >
+                            <a class="link" href="{{ entry[3] }}" target="_blank">> {{ entry[4] }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <footer>
+            <div class="footer-container">
+                <div class="left">
+                    <a class="footer-item">
+                        <a class="fa fa-twitter" title="bennyBoy_JP" href="https://twitter.com/Bennyboy_JP" target="_blank"></a>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
