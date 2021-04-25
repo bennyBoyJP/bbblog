@@ -52,6 +52,8 @@ def archives():
 @app.route("/about", methods=["GET"])
 def about():
 
+    global phrase
+    phrase = today_phrase()
     return render_template("about.html", phrase=phrase)
 
 
