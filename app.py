@@ -16,8 +16,8 @@ database.create_tables()
 database.create_password_table()
 
 #postgress database configuration:
-DATABASE_URL = os.environ.get('DATABASE_URL')
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 # GLOBAL VARIABLES
 # login global variable
