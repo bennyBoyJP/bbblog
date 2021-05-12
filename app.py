@@ -1,3 +1,5 @@
+import os
+import psycopg2
 from flask import Flask, render_template, request, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
 import database
@@ -12,6 +14,10 @@ app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = 'super secret key'
 database.create_tables()
 database.create_password_table()
+
+#postgress database configuration:
+DATABASE_URL = os.environ.get('DATABASE_URL')
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 # GLOBAL VARIABLES
 # login global variable
