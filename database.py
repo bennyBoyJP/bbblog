@@ -1,11 +1,4 @@
 import sqlite3
-import os
-import psycopg2
-import psycopg2.extras as ext
-
-DATABASE_URL = os.environ.get('DATABASE_URL')
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-cur = conn.cursor(cursor_factory=ext.DictCursor)
 
 CREATE_TABLE = "CREATE TABLE IF NOT EXISTS entries " \
                "(title TEXT, content TEXT, date TEXT, link TEXT, link_name TEXT, month TEXT, year TEXT)"
@@ -23,13 +16,13 @@ RETRIEVE_PASSWORD = "SELECT * FROM account"
 
 def create_tables():
     with sqlite3.connect("data.db") as connection:
-        cur.connection.execute(CREATE_TABLE)
+        connection.execute(CREATE_TABLE)
 
 
 def create_entry(title, content, date, link, link_name, month, year):
 
     with sqlite3.connect("data.db") as connection:
-        cur.connection.execute(CREATE_ENTRY, (title, content, date, link, link_name, month, year))
+        connection.execute(CREATE_ENTRY, (title, content, date, link, link_name, month, year))
 
 
 def retrieve_entries(query):
@@ -39,28 +32,28 @@ def retrieve_entries(query):
 
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
-        cur.execute(RETRIEVE_ENTRIES, (cm, cy))
-        return cur.fetchall()
+        cursor.execute(RETRIEVE_ENTRIES, (cm, cy))
+        return cursor.fetchall()
 
 
 def del_entries():
 
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
-        cur.execute(DELETE_ENTRIES)
+        cursor.execute(DELETE_ENTRIES)
 
 
 def del_last_entry():
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
-        cur.execute(DELETE_LAST_ENTRY)
+        cursor.execute(DELETE_LAST_ENTRY)
 
 def pnt_archives():
 
     with sqlite3.connect("data.db") as connection:
         cursor = connection.cursor()
         # cursor.execute(PRINT_ARCHIVES)
-        return cur.execute(PRINT_ARCHIVES)
+        return cursor.execute(PRINT_ARCHIVES)
 
 
 def retrieved_entries(query):
@@ -71,7 +64,7 @@ def retrieved_entries(query):
         y = query[-1]  # year
 
         cursor = connection.cursor()
-        cur.execute(RETRIEVE_ENTRIES, (m, y))
+        cursor.execute(RETRIEVE_ENTRIES, (m, y))
 
         return cursor.fetchall()
 
@@ -79,27 +72,27 @@ def retrieved_entries(query):
 def create_password_table():
 
     with sqlite3.connect("pw_table.db") as connection:
-        cur.execute(CREATE_PASSWORD_TABLE)
+        connection.execute(CREATE_PASSWORD_TABLE)
 
 
 def confirm_empty_pw_table():
 
     with sqlite3.connect("pw_table.db") as connection:
         cursor = connection.cursor()
-        cur.execute(CONFIRM_EMPTY_PW_TABLE)
+        cursor.execute(CONFIRM_EMPTY_PW_TABLE)
         return int(cursor.fetchone()[0])
 
 
 def create_password(pw):
 
     with sqlite3.connect("pw_table.db") as connection:
-        cur.execute(CREATE_PASSWORD, (pw,))
+        connection.execute(CREATE_PASSWORD, (pw,))
 
 
 def retrieve_password():
 
     with sqlite3.connect("pw_table.db") as connection:
         cursor = connection.cursor()
-        cur.execute(RETRIEVE_PASSWORD)
-        return cur.fetchone()[0]
+        cursor.execute(RETRIEVE_PASSWORD)
+        return cursor.fetchone()[0]
 

@@ -7,6 +7,8 @@ from datestuff import date_stuff
 from linkmaker import link_maker
 from phrase_gen.word_gen1 import today_phrase
 
+# postgress database configuration:
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -14,10 +16,6 @@ app.config['SESSION_TYPE'] = 'memcached'
 app.config['SECRET_KEY'] = 'super secret key'
 database.create_tables()
 database.create_password_table()
-
-#postgress database configuration:
-# DATABASE_URL = os.environ.get('DATABASE_URL')
-# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 # GLOBAL VARIABLES
 # login global variable
