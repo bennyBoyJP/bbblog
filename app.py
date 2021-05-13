@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import psycopg2.extras as ext
 from flask import Flask, render_template, request, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
 import database
@@ -9,6 +10,8 @@ from phrase_gen.word_gen1 import today_phrase
 
 # postgress database configuration:
 DATABASE_URL = os.environ.get('DATABASE_URL')
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+cur = conn.cursor(cursor_factory=ext.DictCursor)
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
